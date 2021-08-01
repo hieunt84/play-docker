@@ -1,3 +1,5 @@
 ### Ref
-    https://github.com/hieunt84/play-nextcloud.git
+    https://hub.docker.com/_/nextcloud
 ### Deploy
+    use Portainer
+    use docker-compose.yml
