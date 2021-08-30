@@ -9,9 +9,9 @@ sudo -i
 sleep 2
 
 # update system
-yum clean all
-yum -y update
-sleep 1
+# yum clean all
+# yum -y update
+# sleep 1
 
 # config timezone
 timedatectl set-timezone Asia/Ho_Chi_Minh
@@ -33,12 +33,20 @@ cat >> "/etc/hosts" <<END
 END
 
 ##########################################################################################
-# SECTION 2: INSTALL Docker
+# SECTION 2: INSTALL Docker, Docker-compse, Portainer, git
 
 # Install docker
 curl -fsSL https://get.docker.com/ | sh
 systemctl start docker
 systemctl enable docker
+
+# Install docker-compose
+sudo curl -sL "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+# install git
+yum -y install git
 
 #########################################################################################
 # SECTION 3: DEPLOY portainer
@@ -48,9 +56,9 @@ docker volume create portainer_data
 
 # Tạo portainer container
 docker run -d -p 9000:9000 --name=portainer --restart=always \
--v /var/run/docker.sock:/var/run/docker.sock \
--v portainer_data:/data \
-portainer/portainer-ce
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v portainer_data:/data \
+  portainer/portainer-ce
   
 #########################################################################################
 # SECTION 4: FINISHED
@@ -58,6 +66,7 @@ portainer/portainer-ce
 # config firwall
 systemctl start firewalld
 systemctl enable firewalld
+sudo firewall-cmd --zone=public --permanent --add-port=8069/tcp
 # Open Port for link Portainer
 sudo firewall-cmd --zone=public --permanent --add-port=2375/tcp
 sudo firewall-cmd --reload

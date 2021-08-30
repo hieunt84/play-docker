@@ -1,6 +1,7 @@
 ### Ref
     https://blog.vietnamlab.vn/quan-ly-docker-ez-voi-portainer/
     https://tel4vn.edu.vn/phan-2-cau-hinh-portainer-giam-sat-docker-tren-remote-host/
+    https://www.portainer.io/blog/new-portainer-ce-2.6.0-release?utm_campaign=Portainer%20Community%20Program&utm_source=MOTD
 
 ### Deploy
     # Tạo volume cho portainer
@@ -10,7 +11,7 @@
       docker run -d -p 9000:9000 --name=portainer --restart=always \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v portainer_data:/data \
-        portainer/portainer
+        portainer/portainer-ce
 
 ### Update
     # Stop portainer container
@@ -26,5 +27,5 @@
     docker run -d -p 9000:9000 --name=portainer --restart=always \
       -v /var/run/docker.sock:/var/run/docker.sock \
       -v portainer_data:/data \
-      portainer/portainer
+      portainer/portainer-ce
     

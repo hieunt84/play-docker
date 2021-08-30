@@ -6,7 +6,7 @@ networks:
 services:
   portainer:
     container_name: portainer
-    image: portainer/portainer
+    image: portainer/portainer-ce
     ports:
       - "9000:9000"
     volumes:
