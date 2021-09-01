@@ -64,6 +64,7 @@ cd "$BACKUP_DIR"
 tar -czf backup-$(date +%F\-%H\-%M\-%S).tar.gz "$APP_DIR" >/dev/null 2>&1
 
 # Keep the last 3 backups
+# find "$BACKUP_DIR" -type f -name "*.gz" -mtime +3 -delete
 find "$BACKUP_DIR" -type f -name "*.gz" -cmin +18 -delete
 
 # cron and email
