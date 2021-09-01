@@ -1,12 +1,14 @@
+# Example deploy nextcloud
 version: '2'
 
 services:
   db:
+    container_name: mairadb
     image: mariadb:10.5
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      - /nexcloud/mairadb:/var/lib/mysql
+      - /home/nextcloud/data/mairadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=nextcloud
       - MYSQL_PASSWORD=nextcloud
@@ -14,14 +16,15 @@ services:
       - MYSQL_USER=nextcloud
 
   app:
-    image: nextcloud
+    container_name: nextcloud
+    image: nextcloud:22.1.1-apache
     restart: always
     ports:
       - 8080:80
     links:
       - db
     volumes:
-      - /nextcloud/nextcloud:/var/www/html
+      - /home/nextcloud/data/nextcloud:/var/www/html
     environment:
       - MYSQL_PASSWORD=nextcloud
       - MYSQL_DATABASE=nextcloud

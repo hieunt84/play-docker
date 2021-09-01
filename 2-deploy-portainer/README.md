@@ -3,6 +3,10 @@
     https://tel4vn.edu.vn/phan-2-cau-hinh-portainer-giam-sat-docker-tren-remote-host/
     https://www.portainer.io/blog/new-portainer-ce-2.6.0-release?utm_campaign=Portainer%20Community%20Program&utm_source=MOTD
 
+### Portainer là gì
+- phần mềm quản lý docker host
+- quản lý tài nguyên: host, volume, network,...
+- cài đặt ứng dụng với template có sẵn.
 ### Deploy
     # Tạo volume cho portainer
       docker volume create portainer_data

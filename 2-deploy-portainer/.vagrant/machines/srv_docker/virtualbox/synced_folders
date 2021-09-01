@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"C:/Projects/play-docker/2-deploy-portainer","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
