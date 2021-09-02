@@ -3,7 +3,7 @@
 
 # declare variable
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-SERVER_NAME=docker1
+SERVER_NAME=${HOSTNAME}
 TIMESTAMP=$(date +"%F")
 BACKUP_DIR="/home/backup/app1"
 # folder need backup app1
@@ -22,14 +22,14 @@ cd "$BACKUP_DIR"
 tar -czf backup-$(date +%F\-%H\-%M\-%S).tar.gz "$APP_DIR" >/dev/null 2>&1
 
 # Keep the last 3 backups
-find "$BACKUP_DIR" -type f -name "*.gz" -cmin +18 -delete
+find "$BACKUP_DIR" -type f -name "*.gz" -mtime +3 -delete
 
 # cron and email
 if [ ! -f /etc/cron.d/app1.cron ]; then
     cat > "/etc/cron.d/app1.cron" <<EOF
     SHELL=/bin/sh
     MAILTO="hieunt9@gmail.com"
-    */5 * * * * root $SCRIPT_BK
+    0 0 * * * root $SCRIPT_BK
 EOF
     echo "Restarting crond service"
     systemctl restart crond.service
