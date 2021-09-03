@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script deploy portainer with docker
+# Script deploy nextcloud with docker-compose
 
 ##########################################################################################
 # SECTION 1: PREPARE
@@ -33,8 +33,7 @@ cat >> "/etc/hosts" <<END
 END
 
 ##########################################################################################
-# SECTION 2: INSTALL Docker, Docker-compse, Portainer, git
-
+# SECTION 2: INSTALL Docker, Docker-compse, git
 # Install docker
 curl -fsSL https://get.docker.com/ | sh
 systemctl start docker
@@ -45,20 +44,26 @@ sudo curl -sL "https://github.com/docker/compose/releases/download/1.29.2/docker
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-# install git
+# Install git
 yum -y install git
 
 #########################################################################################
-# SECTION 3: DEPLOY portainer
+# SECTION 3: DEPLOY nextcloud
 
-# Tạo volume cho portainer
-docker volume create portainer_data
+# make directory nextcloud
+cd ~
+mkdir /home/nextcloud
+cd /home/nextcloud
 
-# Tạo portainer container
-docker run -d -p 9000:9000 --name=portainer --restart=always \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -v portainer_data:/data \
-  portainer/portainer-ce
+# clone repo
+git clone https://github.com/hieunt84/play-docker.git
+cd /play-docker/3-docker-compose/
+
+# run docker-compose
+docker-compose up -d
+
+# verify
+docker-compse ps
   
 #########################################################################################
 # SECTION 4: FINISHED
@@ -66,7 +71,7 @@ docker run -d -p 9000:9000 --name=portainer --restart=always \
 # config firwall
 systemctl start firewalld
 systemctl enable firewalld
-sudo firewall-cmd --zone=public --permanent --add-port=8069/tcp
+sudo firewall-cmd --zone=public --permanent --add-port=8080/tcp
 # Open Port for link Portainer
 sudo firewall-cmd --zone=public --permanent --add-port=2375/tcp
 sudo firewall-cmd --reload

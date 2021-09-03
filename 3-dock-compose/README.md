@@ -1,3 +1,6 @@
+### Giới thiệu docker-compose
+- là công cụ dùng để triển khai ứng dụng gồm nhiều container liên kết với nhau.
+
 ### command docker-compose
 ```console
 docker-compose up -d
