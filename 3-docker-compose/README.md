@@ -6,6 +6,10 @@
 docker-compose up -d
 docker-compose rm
 docker-compose ps
+docker-compose exec [service-name] [command]
+  example: docker-compose exec mariadb \
+     /usr/bin/mysqldump -u root --password=owncloud \
+     owncloud > owncloud_db_$(date +%Y%m%d).sql
 
 docker-compose stop
 docker-compose down
